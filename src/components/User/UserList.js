@@ -1,10 +1,28 @@
-import { useState } from "react";
-import { users } from "../../static.json";
+import { useState, useEffect } from "react";
+import Spinner from "../UI/Spinner";
 
 export default function UsersList() {
+  const [users, setUsers] = useState(null);
   const [userIndex, setUserIndex] = useState(0);
 
-  const user = users[userIndex];
+  const user = users?.[userIndex];
+
+  useEffect(() => {
+    fetch("https://ymsib8-3001.preview.csb.app/users")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("data", data);
+        setUsers(data);
+      });
+  }, []);
+
+  if (users === null) {
+    return (
+      <p>
+        <Spinner /> Loading users...
+      </p>
+    );
+  }
   return (
     <>
       <ul className="users items-list-nav">
