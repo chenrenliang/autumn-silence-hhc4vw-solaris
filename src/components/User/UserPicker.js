@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import { users } from "../../static.json";
 import Spinner from "../UI/Spinner";
 
 export default function UserPicker() {
-  const [user, setUsers] = useState(null);
+  const [users, setUsers] = useState(null);
 
   useEffect(() => {
     fetch("https://6b1rqw-3001.preview.csb.app/users")
@@ -14,7 +13,7 @@ export default function UserPicker() {
       });
   }, []);
 
-  if (user === null) {
+  if (users === null) {
     return <Spinner />;
   }
   return (

@@ -1,20 +1,32 @@
 import { useState, useEffect } from "react";
 import Spinner from "../UI/Spinner";
+import getData from "../../utils/api";
 
 export default function UsersList() {
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [users, setUsers] = useState(null);
+
   const [userIndex, setUserIndex] = useState(0);
 
   const user = users?.[userIndex];
 
   useEffect(() => {
-    fetch("https://6b1rqw-3001.preview.csb.app/users")
-      .then((res) => res.json())
+    getData("https://6b1rqw-3001.preview.csb.app/users")
       .then((data) => {
         console.log("data", data);
         setUsers(data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setError(error);
+        setIsLoading(false);
       });
   }, []);
+
+  if (error) {
+    return <p>{error.message}</p>;
+  }
 
   if (users === null) {
     return (
