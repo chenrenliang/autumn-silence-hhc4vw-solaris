@@ -8,7 +8,7 @@ export default function UsersList() {
   const user = users?.[userIndex];
 
   useEffect(() => {
-    fetch("https://ymsib8-3001.preview.csb.app/users")
+    fetch("hhttps://rl0cm1-3001.preview.csb.app/users")
       .then((res) => res.json())
       .then((data) => {
         console.log("data", data);
