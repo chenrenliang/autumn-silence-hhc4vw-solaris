@@ -6,7 +6,7 @@ export default function UserPicker() {
   const [user, setUsers] = useState(null);
 
   useEffect(() => {
-    fetch("https://rl0cm1-3001.preview.csb.app/users")
+    fetch("https://6b1rqw-3001.preview.csb.app/users")
       .then((res) => res.json())
       .then((data) => {
         console.log("data", data);

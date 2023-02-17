@@ -4,28 +4,50 @@ export default function redcuer(state, action) {
       return {
         ...state,
         group: action.payload,
-        bookableIndex: 0
+        bookableIndex: 0,
       };
 
     case "SET_BOOKABLE":
       return {
         ...state,
-        bookableIndex: action.payload
+        bookableIndex: action.payload,
       };
 
     case "TOGGLE_HAS_DETAILS":
       return {
         ...state,
-        hasDetails: !state.hasDetails
+        hasDetails: !state.hasDetails,
       };
 
     case "NEXT_BOOKABLE":
-      const count = state.bookables.filter((b) => b.group === state.group)
-        .length;
+      const count = state.bookables.filter(
+        (b) => b.group === state.group
+      ).length;
 
       return {
         ...state,
-        bookableIndex: (state.bookableIndex + 1) % count
+        bookableIndex: (state.bookableIndex + 1) % count,
+      };
+
+    case "FETCH_BOOKABLES_REQUEST":
+      return {
+        ...state,
+        isLoading: true,
+        error: false,
+        bookables: [],
+      };
+    case "FETCH_BOOKABLES_SUCCESS":
+      return {
+        ...state,
+        isLoading: false,
+        bookables: action.payload,
+      };
+
+    case "FETCH_BOOKABLES_ERROR":
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
       };
 
     default:
