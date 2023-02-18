@@ -12,7 +12,7 @@ export default function UsersList() {
   const user = users?.[userIndex];
 
   useEffect(() => {
-    getData("https://6b1rqw-3001.preview.csb.app/users")
+    getData("/users")
       .then((data) => {
         console.log("data", data);
         setUsers(data);
@@ -28,13 +28,15 @@ export default function UsersList() {
     return <p>{error.message}</p>;
   }
 
-  if (users === null) {
+  if (isLoading) {
     return (
       <p>
-        <Spinner /> Loading users...
+        <Spinner />
+        Loading users...
       </p>
     );
   }
+
   return (
     <>
       <ul className="users items-list-nav">

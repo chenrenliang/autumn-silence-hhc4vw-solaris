@@ -1,4 +1,4 @@
-import { useReducer, Fragment, useEffect } from "react";
+import { useReducer, useRef, Fragment, useEffect } from "react";
 import { sessions, days } from "../../static.json";
 import { FaArrowRight } from "react-icons/fa";
 import Spinner from "../UI/Spinner";
@@ -25,10 +25,12 @@ export default function BookablesList() {
   const bookable = bookablesInGroup[bookableIndex];
   const groups = [...new Set(bookables.map((b) => b.group))];
 
+  const timerRef = useRef(null);
+
   useEffect(() => {
     dispatch({ type: "FETCH_BOOKABLES_REQUEST" });
 
-    getData("https://6b1rqw-3001.preview.csb.app/bookables")
+    getData("/bookables")
       .then((bookables) =>
         dispatch({
           type: "FETCH_BOOKABLES_SUCCESS",
@@ -42,6 +44,18 @@ export default function BookablesList() {
         })
       );
   }, []);
+
+  useEffect(() => {
+    timerRef.current = setInterval(() => {
+      dispatch({ type: "NEXT_BOOKABLE" });
+    }, 3000);
+
+    return stopPresentation;
+  }, []);
+
+  function stopPresentation() {
+    clearInterval(timerRef.current);
+  }
 
   function changeGroup(e) {
     dispatch({
