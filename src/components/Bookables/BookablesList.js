@@ -25,7 +25,8 @@ export default function BookablesList() {
   const bookable = bookablesInGroup[bookableIndex];
   const groups = [...new Set(bookables.map((b) => b.group))];
 
-  const timerRef = useRef(null);
+  // const timerRef = useRef(null);
+  const nextButtonRef = useRef();
 
   useEffect(() => {
     dispatch({ type: "FETCH_BOOKABLES_REQUEST" });
@@ -45,17 +46,17 @@ export default function BookablesList() {
       );
   }, []);
 
-  useEffect(() => {
-    timerRef.current = setInterval(() => {
-      dispatch({ type: "NEXT_BOOKABLE" });
-    }, 3000);
+  // useEffect(() => {
+  //   timerRef.current = setInterval(() => {
+  //     dispatch({ type: "NEXT_BOOKABLE" });
+  //   }, 3000);
 
-    return stopPresentation;
-  }, []);
+  //   return stopPresentation;
+  // }, []);
 
-  function stopPresentation() {
-    clearInterval(timerRef.current);
-  }
+  // function stopPresentation() {
+  //   clearInterval(timerRef.current);
+  // }
 
   function changeGroup(e) {
     dispatch({
@@ -69,6 +70,8 @@ export default function BookablesList() {
       type: "SET_BOOKABLE",
       payload: selectedIndex,
     });
+
+    nextButtonRef.current.focus();
   }
 
   function nextBookable() {
@@ -112,7 +115,12 @@ export default function BookablesList() {
           ))}
         </ul>
         <p>
-          <button className="btn" onClick={nextBookable} autoFocus>
+          <button
+            className="btn"
+            onClick={nextBookable}
+            ref={nextButtonRef}
+            autoFocus
+          >
             <FaArrowRight />
             <span>Next</span>
           </button>
